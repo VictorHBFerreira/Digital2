@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout}">
+<head>
+    <meta charset="UTF-8">
+    <title>Lista de Hoteis</title>
+</head>
+<body>
+<div layout:fragment="corpo">
+    <h1>Lista de Hoteis</h1>
+
+    <input name="" id="idCodigo" type="hidden">
+    <table class="table">
+    <tr>
+        <tr>
+            <th>Nome</th>
+            <th>Aceita Animais</th>
+            <th>Data Abertura</th>
+        </tr>
+
+        <tr th:each="hot:${hots}">
+            <td th:text="${hot.nome}"></td>
+            <td th:text="${hot.aceitaAnimais?'Sim':'Não'}"></td>
+            <td th:text="${hot.dataAbertura}"></td>
+            <td><a th:href="@{/hotel/editar/}+${hot.codigo}" class="btn btn-outline-primary">Editar</a></td>
+            <td>
+            <!-- Botão para acionar modal -->
+            <button th:onclick="|codigo.value = ${hot.codigo}|" type="button" class="btn btn-outline-danger" data-toggle="modal" data-target="#modalExemplo">
+                Deletar
+            </button>
+            </td>
+        </tr>
+    </tr>
+        <!-- Modal -->
+        <div class="modal fade" id="modalExemplo" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Confirmação</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Fechar">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        deseja realmente excluir o animal?
+                    </div>
+                    <div class="modal-footer">
+                        <form th:action="@{/hotel/excluir}" method="post">
+                            <input type="hidden" name="codigo" id="codigo">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Não</button>
+                            <button type="submit" class="btn btn-primary">Sim</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </table>
+
+</div>
+</body>
+</html>

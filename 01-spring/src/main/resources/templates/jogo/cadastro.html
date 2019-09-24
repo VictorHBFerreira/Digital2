@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<h1>Cadastro de Jogo</h1>
+
+<form action="/jogo/cadastro" method="post">
+    <div>
+        <label for="id-nome">Nome</label>
+        <input id="id-nome" name="nome">
+    </div>
+    <div>
+        <label for="id-preco">Preço</label>
+        <input id="id-preco" name="preco">
+    </div>
+    <div>
+        <label for="id-desc">Descrição</label>
+        <textarea id="id-desc" name="descricao"></textarea>
+    </div>
+    <div>
+        <input type="submit" value="Cadastrar">
+    </div>
+</form>
+
+
+</body>
+</html>

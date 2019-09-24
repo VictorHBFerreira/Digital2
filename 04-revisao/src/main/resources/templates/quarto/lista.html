@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout}">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<div layout:fragment="corpo">
+
+    <h1>Lista de Quartos</h1>
+    <form class="form-inline mb-2" th:action="@{/quarto/listar}">
+        <select class="form-control" name="codigoHotel">
+            <option value="0">Hoteis</option>
+            <option th:each="h:${hoteis}" th:text></option>
+        </select>
+    <div th:if="${msg != null}" class="alert alert-success" th:text="${msg}"></div>
+
+    <table class="table table-striped">
+        <tr>
+            <th>Hotel</th>
+            <th>Numero</th>
+            <th>Valor</th>
+            <th></th>
+        </tr>
+        <tr th:each="h:${lista}">
+            <td th:text="${h.nome}"></td>
+            <td th:text="${#temporals.format(h.dataAbertura,'dd/MM/yyyy')}"></td>
+            <td th:text="${h.aceitaAnimais?'Sim':'Não'}"></td>
+            <td>
+                <a th:href="@{/hotel/alterar/} + ${h.codigo}" class="btn btn-outline-dark btn-sm">Alterar</a>
+                <!-- Botão para acionar modal -->
+                <button th:onclick="|hotelCodigo.value = ${h.codigo}|" type="button" class="btn btn-outline-danger btn-sm" data-toggle="modal" data-target="#modalExemplo">
+                    Excluir
+                </button>
+                <a th:href="@{/quarto/listar?codigoHotel=}+${h.codigo}" class="btn btn-outline-warning btn-sm">Quartos</a>
+            </td>
+        </tr>
+    </table>
+
+    </form>
+</body>
+</html>

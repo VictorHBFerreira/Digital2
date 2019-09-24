@@ -1,19 +1,20 @@
 package br.com.fiap.revisao.model;
+
 import javax.persistence.*;
 import java.time.LocalDate;
 
 @Entity
-@SequenceGenerator(name="hostel", sequenceName="SQ_T_HOTEL", allocationSize = 1)
+@SequenceGenerator(name="hotel",sequenceName = "SQ_T_HOTEL", allocationSize = 1)
 public class Hotel {
+
     @Id
-    @GeneratedValue(generator = "hotal", strategy = GenerationType.SEQUENCE)
-    @Column(name="cd_hotel")
+    @GeneratedValue(generator = "hotel", strategy = GenerationType.SEQUENCE)
     private int codigo;
-    @Column(name="nm_hotel")
+
     private String nome;
-    @Column(name="boolean_aceitaAnimais")
+
     private boolean aceitaAnimais;
-    @Column(name="dt_abertura")
+
     private LocalDate dataAbertura;
 
     public int getCodigo() {

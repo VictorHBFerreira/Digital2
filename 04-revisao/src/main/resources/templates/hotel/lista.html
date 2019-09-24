@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout}">
+<head>
+    <meta charset="UTF-8">
+    <title>Lista de Hoteis</title>
+</head>
+<body>
+
+<div layout:fragment="corpo">
+
+    <h1>Lista de Hotéis</h1>
+
+    <div th:if="${msg != null}" class="alert alert-success" th:text="${msg}"></div>
+
+    <table class="table table-striped">
+        <tr>
+            <th>Nome</th>
+            <th>Data Abertura</th>
+            <th>Aceita Animais</th>
+            <th></th>
+        </tr>
+        <tr th:each="h:${lista}">
+            <td th:text="${h.nome}"></td>
+            <td th:text="${#temporals.format(h.dataAbertura,'dd/MM/yyyy')}"></td>
+            <td th:text="${h.aceitaAnimais?'Sim':'Não'}"></td>
+            <td>
+                <a th:href="@{/hotel/alterar/} + ${h.codigo}" class="btn btn-outline-dark btn-sm">Alterar</a>
+                <!-- Botão para acionar modal -->
+                <button th:onclick="|hotelCodigo.value = ${h.codigo}|" type="button" class="btn btn-outline-danger btn-sm" data-toggle="modal" data-target="#modalExemplo">
+                    Excluir
+                </button>
+                <a th:href="@{/quarto/listar?codigoHotel=}+${h.codigo}" class="btn btn-outline-warning btn-sm">Quartos</a>
+            </td>
+        </tr>
+    </table>
+
+    <!-- Modal -->
+    <div class="modal fade" id="modalExemplo" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Confirmação</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Fechar">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    Deseja realmente excluir o hotel?
+                </div>
+                <div class="modal-footer">
+                    <form th:action="@{/hotel/excluir}" method="post">
+                        <input type="hidden" name="codigo" id="hotelCodigo">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Não</button>
+                        <button type="submit" class="btn btn-danger">Sim</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+</body>
+</html>
